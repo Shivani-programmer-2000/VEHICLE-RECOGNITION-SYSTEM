@@ -37,5 +37,5 @@ This project uses deep learning to detect vehicles from images and video streams
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/Vehicle-Recognition-System.git
+git clone https://github.com/your-username/VEHICLE-RECOGNITION-SYSTEM.git
 cd VEHICLE-RECOGNITION-SYSTEM
