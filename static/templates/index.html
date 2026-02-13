@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detectron2 Web App</title>
+    <script>
+        function uploadImage() {
+            let fileInput = document.getElementById('fileInput').files[0];
+
+            if (!fileInput) {
+                alert("Please select a file before detecting.");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("file", fileInput);
+
+            fetch('/detect', {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('results').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</head>
+<body>
+    <h2>Upload an Image for Detectron2 Detection</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadImage()">Detect</button>
+    <h3>Results:</h3>
+    <pre id="results"></pre>
+</body>
+</html>

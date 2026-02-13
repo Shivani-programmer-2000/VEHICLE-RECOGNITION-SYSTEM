@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR & Object Detection Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload an Image for YOLOv8 Detection</h2>
+        <a href="https://shorturl.at/4lehi" class="sample-link">Sample Image</a>
+
+        <input type="file" id="fileInput">
+        <button onclick="uploadImage()">Detect</button>
+
+        <h3>Results:</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Confidence</th>
+                    <th>x1</th>
+                    <th>y1</th>
+                    <th>x2</th>
+                    <th>y2</th>
+                    <th>Extracted Text (OCR)</th>
+                </tr>
+            </thead>
+            <tbody id="resultsTable"></tbody>
+        </table>
+
+        <h3>Detected Image:</h3>
+        <img id="detectedImage" style="max-width: 500px; display: none;">
+    </div>
+
+    <script>
+        function uploadImage() {
+            let fileInput = document.getElementById('fileInput').files[0];
+            let formData = new FormData();
+            formData.append("file", fileInput);
+
+            fetch('/detect', {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                let resultsTable = document.getElementById("resultsTable");
+                resultsTable.innerHTML = "";
+
+                data.detections.forEach(detection => {
+                    let row = resultsTable.insertRow();
+                    row.insertCell(0).textContent = detection.class;
+                    row.insertCell(1).textContent = detection.confidence;
+                    row.insertCell(2).textContent = detection.x1;
+                    row.insertCell(3).textContent = detection.y1;
+                    row.insertCell(4).textContent = detection.x2;
+                    row.insertCell(5).textContent = detection.y2;
+                    row.insertCell(6).textContent = detection.ocr_text || 'N/A';
+                });
+
+                if (data.image_url) {
+                    let img = document.getElementById('detectedImage');
+                    img.src = data.image_url;
+                    img.style.display = "block";
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
+
+
