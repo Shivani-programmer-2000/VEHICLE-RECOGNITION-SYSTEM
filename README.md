@@ -38,4 +38,4 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/your-username/Vehicle-Recognition-System.git
-cd Vehicle-Recognition-System
+cd VEHICLE-RECOGNITION-SYSTEM
