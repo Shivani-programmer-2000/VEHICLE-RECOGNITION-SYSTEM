@@ -44,11 +44,15 @@ Clone the repository:
 git clone https://github.com/Shivani-programmer-2000/VEHICLE-RECOGNITION-SYSTEM.git
 cd VEHICLE-RECOGNITION-SYSTEM
 
+---
+
+---
 ## Install dependencies:
 
 pip install flask ultralytics torch torchvision opencv-python pytesseract pillow
 
-
+---
+ 
 ## Run the application:
 
 python app.py
